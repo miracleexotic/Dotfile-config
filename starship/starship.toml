@@ -1,0 +1,148 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Timeout for commands executed by starship (ms)
+command_timeout = 1000
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$env_var\
+$crystal\
+$custom\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$os\
+$container\
+$shell\
+$character"""
+
+right_format = """
+$sudo\
+$cmd_duration"""
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[❯](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = '[❯](bold red)'
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[directory]
+truncation_length = 3
+truncation_symbol = '…/'
+style = 'bold fg:#0899c2 bg:#ffffff'
+read_only_style = 'bold fg:#0899c2'
+format = '[](fg:#ffffff)[ $path]($style)[](fg:#ffffff)[$read_only]($read_only_style) '
+
+[cmd_duration]
+min_time = 500
+style = 'bold white'
+format = 'took [$duration]($style)'
+
+[container]
+symbol = '⬢'
+format = '[$symbol \[$name\]]($style) '
+
+[docker_context]
+symbol = '🐳'
+style = 'bold blue'
+format = 'via [$symbol $context]($style) '
+
+[kubernetes]
+disabled = false
+detect_files = ['k8s']
+
+[sudo]
+style = 'bold white'
+symbol = '🧙 '
+disabled = false
+
+# Programming language
+[golang]
+symbol = ''
+style = 'bold cyan'
+format = 'via [$symbol]($style) '
+
+[nodejs]
+symbol = ''
+style = 'bold green'
+format = 'via [$symbol]($style) '
+
+[python]
+symbol = ''
+style = 'bold yellow'
+format = 'via [$symbol]($style) '
+
+
