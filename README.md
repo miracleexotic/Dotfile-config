@@ -16,3 +16,7 @@
 3. install posh-git
 4. install Terminal-Icon
 5. install PSReadLine
+
+Ref.
+https://medium.com/@ferarias/docker-in-windows-11-using-wsl2-8e30faddc32c
+https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9
