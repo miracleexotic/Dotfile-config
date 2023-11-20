@@ -1,3 +1,11 @@
+
+- name: Git Clone
+  ansible.builtin.git:
+    repo: 'https://github.com/b4b4r07/enhancd'
+    dest: "/home/{{ user }}/enhancd"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
+
 - name: Install .zshrc
   ansible.builtin.shell: sh init.sh
   args:

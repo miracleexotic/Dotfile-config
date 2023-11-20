@@ -1,4 +1,4 @@
 - name: Install startship
   ansible.builtin.shell: sh init.sh
   args:
-    chdir: ./startship/
+    chdir: ./starship/

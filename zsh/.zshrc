@@ -342,7 +342,7 @@ eval "$(starship init zsh)"
 #if [ "$TMUX" = "" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
 
 
-source enhancd/init.sh
+source ~/enhancd/init.sh
 export FZF_DEFAULT_OPTS="--preview 'batcat --color=always --style=header,grid --line-range :100 {}'"
 alias lf='find . -type f | fzf'
 

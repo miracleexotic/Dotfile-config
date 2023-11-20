@@ -119,3 +119,5 @@ fi
 
 . /usr/share/doc/fzf/examples/key-bindings.bash
 . "$HOME/.cargo/env"
+
+export GNUTLS_CPUID_OVERRIDE=0x1

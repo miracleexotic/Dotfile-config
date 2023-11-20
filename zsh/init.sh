@@ -2,21 +2,20 @@
 
 ### Install zsh
 sudo apt update
-sudo apt install zsh
+sudo GNUTLS_CPUID_OVERRIDE=0x1 apt install build-essential gcc cmake zsh bat fzf -y
+
 
 ### Install exa via rust cargo
-# - Uninstall the APT package if present
-sudo apt remove exa
-
 # - Install rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env && cargo build --release
 
 # - Install exa
 cargo install exa
 
 ### Install enhancd
-git clone https://github.com/b4b4r07/enhancd ~/. && source ~/enhancd/init.sh
+source ~/enhancd/init.sh
 
 
 cp ./.zshrc ~/.zshrc
-source ~/.zshrc
+

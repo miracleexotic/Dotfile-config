@@ -3,6 +3,10 @@
   hosts: server
   connection: local
   gather_facts: false
+  become: true
+  become_user: "{{ user }}"
+  vars:
+    user: "user"
 
   tasks:
     - include : ./bash/install.yaml
