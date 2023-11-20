@@ -16,18 +16,18 @@ WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 PROMPT_EOL_MARK=""
 
 # configure key keybindings
-bindkey -e                                        # emacs key bindings
-bindkey ' ' magic-space                           # do history expansion on space
-bindkey '^U' backward-kill-line                   # ctrl + U
-bindkey '^[[3;5~' kill-word                       # ctrl + Supr
-bindkey '^[[3~' delete-char                       # delete
-bindkey '^[[1;5C' forward-word                    # ctrl + ->
-bindkey '^[[1;5D' backward-word                   # ctrl + <-
-bindkey '^[[5~' beginning-of-buffer-or-history    # page up
-bindkey '^[[6~' end-of-buffer-or-history          # page down
-bindkey '^[[H' beginning-of-line                  # home
-bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+#bindkey -e                                        # emacs key bindings
+#bindkey ' ' magic-space                           # do history expansion on space
+#bindkey '^U' backward-kill-line                   # ctrl + U
+#bindkey '^[[3;5~' kill-word                       # ctrl + Supr
+#bindkey '^[[3~' delete-char                       # delete
+#bindkey '^[[1;5C' forward-word                    # ctrl + ->
+#bindkey '^[[1;5D' backward-word                   # ctrl + <-
+#bindkey '^[[5~' beginning-of-buffer-or-history    # page up
+#bindkey '^[[6~' end-of-buffer-or-history          # page down
+#bindkey '^[[H' beginning-of-line                  # home
+#bindkey '^[[F' end-of-line                        # end
+#bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
 autoload -Uz compinit
@@ -187,7 +187,7 @@ toggle_oneline_prompt(){
     zle reset-prompt
 }
 zle -N toggle_oneline_prompt
-bindkey ^P toggle_oneline_prompt
+bindkey '^P' toggle_oneline_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -257,9 +257,9 @@ export ZSH_CUSTOM=$HOME/.config/ohmyzsh/custom
 
 # Plugins
 plugins=(
-    git 
-    zsh-256color 
-    zplug 
+    git
+    zsh-256color
+    zplug
     zsh-autosuggestions
 )
 
@@ -305,19 +305,18 @@ zplug "b4b4r07/enhancd", use:init.sh
 # zplug check returns true if the given repository exists
 if zplug check b4b4r07/enhancd; then
     # setting if enhancd is available
-    export ENHANCD_FILTER=fzy
+    export ENHANCD_FILTER="fzf --preview 'exa -al --tree --level 1 --group-directories-first --git-ignore --header --git --no-user --no-time --no-filesize --no-permissions {}' --preview-window right,50% --height 35% --reverse --ansi":fzy
 fi
 
 # Enhanced dir list with git features
 zplug "supercrabtree/k"
 
 # Tips for aliases
-zplug "djui/alias-tips"
+#zplug "djui/alias-tips"
+#export ZSH_PLUGINS_ALIAS_TIPS_TEXT=' alias hint: '
 
 # Docker completion
 zplug "felixr/docker-zsh-completion"
-
-export ZSH_PLUGINS_ALIAS_TIPS_TEXT=' alias hint: '
 
 # User configuration
 export PATH="$HOME/.dotfiles/bin:$HOME/.bin:/usr/local/bin:$PATH"
@@ -328,14 +327,6 @@ export TERM="xterm-256color"
 # :: Aliases and functions
 alias ls="exa --icons --header"
 
-# Docker VMs
-alias dev=ubuntu-dev
-function ubuntu-dev {
-  id=$(uuidgen | cut -c 1-4)
-  name=$USER-ubuntu-dev-$id
-  docker run -ti --rm --name $name --hostname $name --volumes-from dev-volumes -w $PWD -u dev drahosp/ubuntu-dev "$@"
-}
-
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
    zplug install
@@ -344,14 +335,16 @@ fi
 # Load everything
 zplug load
 
-# Python conda environment cross platform
-MYPYTHON_PATH='/mnt/c/tools/miniconda3/envs'
-alias xpython='f(){ local first_arg=$1; shift 1; $MYPYTHON_PATH/$first_arg/python.exe "$@";  unset -f f; }; f'
-
 # Starship theme
 eval "$(starship init zsh)"
 
 # Starting TMUX
-if [ "$TMUX" = "" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
+#if [ "$TMUX" = "" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
+
+
+source enhancd/init.sh
+export FZF_DEFAULT_OPTS="--preview 'batcat --color=always --style=header,grid --line-range :100 {}'"
+alias lf='find . -type f | fzf'
+
 
 
