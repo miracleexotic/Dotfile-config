@@ -6,6 +6,6 @@
 
   tasks:
     - include : ./bash/install.yaml
-    # - include : ./zsh/install.yaml
-    # - include : ./starship/install.yaml
-    # - include : ./tmux/install.yaml
+    - include : ./zsh/install.yaml
+    - include : ./starship/install.yaml
+    - include : ./tmux/install.yaml
