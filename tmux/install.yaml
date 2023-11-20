@@ -1,3 +1,31 @@
+- name: Git Clone
+  ansible.builtin.git:
+    repo: 'https://github.com/tmux-plugins/tpm'
+    dest: "/home/{{ user }}/.tmux/plugins/tpm"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
+
+- name: Git Clone
+  ansible.builtin.git:
+    repo: 'https://github.com/o0th/tmux-nova.git'
+    dest: "/home/{{ user }}/.tmux/plugins/tmux-nova"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
+
+- name: Git Clone
+  ansible.builtin.git:
+    repo: 'https://github.com/tmux-plugins/tmux-cpu.git'
+    dest: "/home/{{ user }}/.tmux/plugins/tmux-cpu"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
+
+- name: Git Clone
+  ansible.builtin.git:
+    repo: 'https://github.com/tmux-plugins/tmux-net-speed.git'
+    dest: "/home/{{ user }}/.tmux/plugins/tmux-net-speed"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
+
 - name: Install tmux
   ansible.builtin.shell: sh init.sh
   args:

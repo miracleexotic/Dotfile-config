@@ -4,6 +4,9 @@
 sudo apt update
 sudo GNUTLS_CPUID_OVERRIDE=0x1 apt install build-essential gcc cmake zsh bat fzf -y
 
+echo 'export SHELL=`which zsh`' >> ~/.profile
+echo '[ -z "$ZSH_VERSION" ] && exec "$SHELL" -l' >> ~/.profile
+
 
 ### Install exa via rust cargo
 # - Install rust
