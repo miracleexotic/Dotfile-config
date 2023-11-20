@@ -9,12 +9,10 @@ echo '[ -z "$ZSH_VERSION" ] && exec "$SHELL" -l' >> ~/.profile
 
 
 ### Install exa via rust cargo
-# - Install rust
+# - Install rust and exa
 curl https://sh.rustup.rs -sSf | sh -s -- -y
-source $HOME/.cargo/env && cargo build --release
+source $HOME/.cargo/env && cargo build --release && cargo install exa
 
-# - Install exa
-cargo install exa
 
 ### Install enhancd
 source ~/enhancd/init.sh
