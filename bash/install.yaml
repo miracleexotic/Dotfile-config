@@ -1,0 +1,4 @@
+- name: Install .bashrc
+  ansible.builtin.shell: sh init.sh
+  args:
+    chdir: ./bash/

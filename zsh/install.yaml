@@ -1,0 +1,4 @@
+- name: Install .zshrc
+  ansible.builtin.shell: sh init.sh
+  args:
+    chdir: ./zsh/
