@@ -1,14 +1,27 @@
-# Kali-linux WSL
-1. install zsh
-2. Config file .zshrc
-3. install git
-4. install exa
-2. install startship
-3. install python
-4. install tmux
-5. install enhancd
+## Install Ansible in Control-Node
+Add Repository
+**Note:** _include the official project’s PPA (personal package archive) in your system’s list of sources_
+```sh
+$ sudo apt-add-repository ppa:ansible/ansible
+```
 
+Refresh your system’s package index with newly PPA
+```sh
+$ sudo apt update
+```
 
-Ref.
-https://medium.com/@ferarias/docker-in-windows-11-using-wsl2-8e30faddc32c
-https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9
+Install Ansible Software
+```sh
+$ sudo apt install ansible
+```
+
+Check version
+```sh
+$ ansible --version
+```
+
+## Run playbook
+```sh
+$ cd Dotfile-config/
+$ ansible-playbook install.yaml
+```
