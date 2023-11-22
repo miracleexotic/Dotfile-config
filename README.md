@@ -22,6 +22,7 @@ $ ansible --version
 
 ## Run playbook
 ```sh
+$ git clone -b Ubuntu22.04 --single-branch https://github.com/miracleexotic/Dotfile-config.git
 $ cd Dotfile-config/
 $ ansible-playbook install.yaml
 ```
