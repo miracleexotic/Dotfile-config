@@ -1,4 +1,6 @@
-- name: Install .bashrc
-  ansible.builtin.shell: sh init.sh
-  args:
-    chdir: ./bash/
+- name: Copy .bashrc file
+  copy:
+    src: /home/{{ user }}/Dotfile-config/bash/.bashrc 
+    dest: /home/{{ user }}/.bashrc
+
+

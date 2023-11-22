@@ -4,12 +4,13 @@
   connection: local
   gather_facts: false
   become: true
-  become_user: "{{ user }}"
   vars:
     user: "user"
+  environment:
+    GNUTLS_CPUID_OVERRIDE: 0x1
 
   tasks:
-    - include : ./bash/install.yaml
-    - include : ./zsh/install.yaml
-    - include : ./starship/install.yaml
-    - include : ./tmux/install.yaml
+    - include: ./bash/install.yaml
+    - include: ./zsh/install.yaml
+    - include: ./starship/install.yaml
+    - include: ./tmux/install.yaml

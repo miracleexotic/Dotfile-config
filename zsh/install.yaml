@@ -1,13 +1,57 @@
-- name: Git Clone
-  ansible.builtin.git:
+- name: Install require library
+  apt:
+    pkg:
+      - build-essential
+      - gcc
+      - cmake
+      - zsh
+      - bat
+      - fzf
+      - tree
+    update_cache: yes
+
+- name: Get zsh path
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+
+- name: Change user shell to zsh 
+  user:
+    name: "{{ user }}"
+    shell: "{{ zsh.stdout }}"
+
+- name: Install Rust cargo
+  shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+
+- name: source cargo
+  shell: source /home/{{ user }}/.cargo/env
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+
+- name: Install exa via cargo
+  shell: cargo install exa
+  args:
+    executable: "{{ zsh.stdout }}"
+
+- name: Git Clone enhancd
+  git:
     repo: 'https://github.com/b4b4r07/enhancd'
     dest: "/home/{{ user }}/enhancd"
-  environment:
-    GNUTLS_CPUID_OVERRIDE: 0x1
 
-- name: Install .zshrc
-  ansible.builtin.shell: sh init.sh
+- name: source enhancd
+  shell: source /home/{{ user }}/enhancd/init.sh
   args:
-    chdir: ./zsh/
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+
+- name: Copy .zshrc file
+  copy:
+    src: /home/{{ user }}/Dotfile-config/zsh/.zshrc 
+    dest: /home/{{ user }}/.zshrc
 
 
