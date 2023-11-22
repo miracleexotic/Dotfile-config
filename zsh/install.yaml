@@ -1,4 +1,4 @@
-- name: Install require library
+- name: "| zsh | Install require library"
   apt:
     pkg:
       - build-essential
@@ -11,46 +11,46 @@
       - btop
     update_cache: yes
 
-- name: Get zsh path
+- name: "| zsh | Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
 
-- name: Change user shell to zsh 
+- name: "| zsh | Change user shell to zsh"
   user:
     name: "{{ user }}"
     shell: "{{ zsh.stdout }}"
 
-- name: Install Rust cargo
+- name: "| zsh | Install Rust cargo"
   shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
 
-- name: source cargo
+- name: "| zsh | source cargo"
   shell: source /home/{{ user }}/.cargo/env
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
 
-- name: Install exa via cargo
+- name: "| zsh | Install exa via cargo"
   shell: cargo install exa
   args:
     executable: "{{ zsh.stdout }}"
 
-- name: Git Clone enhancd
+- name: "| zsh | Git Clone enhancd"
   git:
     repo: 'https://github.com/b4b4r07/enhancd'
     dest: "/home/{{ user }}/enhancd"
 
-- name: source enhancd
+- name: "| zsh | source enhancd"
   shell: source /home/{{ user }}/enhancd/init.sh
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
 
-- name: Copy .zshrc file
+- name: "| zsh | Copy .zshrc file"
   copy:
     src: /home/{{ user }}/Dotfile-config/zsh/.zshrc 
     dest: /home/{{ user }}/.zshrc

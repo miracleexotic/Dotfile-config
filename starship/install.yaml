@@ -1,21 +1,21 @@
-- name: Get zsh path
+- name: "| starship | Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
 
-- name: Install Starship
+- name: "| starship | Install Starship"
   shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
 
-- name: Create .config folder
+- name: "| starship | Create .config folder"
   file:
     path: /home/{{ user }}/.config
     state: directory
 
-- name: Copy starship.toml file
+- name: "| starship | Copy starship.toml file"
   copy:
     src: /home/{{ user }}/Dotfile-config/starship/starship.toml
     dest: /home/{{ user }}/.config/starship.toml

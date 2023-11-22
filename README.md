@@ -20,10 +20,15 @@ Check version
 $ ansible --version
 ```
 
-## Run playbook
+## Configuration
+Git clone Ubuntu22.04 branch
 ```sh
 $ export GNUTLS_CPUID_OVERRIDE=0x1
 $ git clone -b Ubuntu22.04 --single-branch https://github.com/miracleexotic/Dotfile-config.git
+```
+
+Run Ansible with sudo permission
+```sh
 $ cd Dotfile-config/
-$ ansible-playbook install.yaml
+$ sudo ansible-playbook install.yaml
 ```

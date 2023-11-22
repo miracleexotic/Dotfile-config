@@ -1,4 +1,4 @@
-- name: Copy .bashrc file
+- name: "| bash | Copy .bashrc file"
   copy:
     src: /home/{{ user }}/Dotfile-config/bash/.bashrc 
     dest: /home/{{ user }}/.bashrc
