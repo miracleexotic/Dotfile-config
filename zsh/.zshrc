@@ -341,6 +341,7 @@ eval "$(starship init zsh)"
 # Starting TMUX
 #if [ "$TMUX" = "" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
 
+export GNUTLS_CPUID_OVERRIDE=0x1
 
 source ~/enhancd/init.sh
 export FZF_DEFAULT_OPTS="--preview 'batcat --color=always --style=header,grid --line-range :100 {}'"
