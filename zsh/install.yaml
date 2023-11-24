@@ -33,6 +33,17 @@
   debug:
     var: result
 
+- name: "| zsh | Install zplug"
+  become_user: "{{ user }}"
+  shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
 - name: "| zsh | Install Rust cargo"
   become_user: "{{ user }}"
   shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
