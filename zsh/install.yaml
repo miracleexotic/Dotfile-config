@@ -10,49 +10,87 @@
       - tree
       - btop
     update_cache: yes
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
+- name: Print out
+  debug:
+    var: zsh
 
 - name: "| zsh | Change user shell to zsh"
   user:
     name: "{{ user }}"
     shell: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | Install Rust cargo"
+  become_user: "{{ user }}"
   shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | source cargo"
   shell: source /home/{{ user }}/.cargo/env
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | Install exa via cargo"
+  become_user: "{{ user }}"
   shell: cargo install exa
   args:
     executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | Git Clone enhancd"
+  become_user: "{{ user }}"
   git:
     repo: 'https://github.com/b4b4r07/enhancd'
     dest: "/home/{{ user }}/enhancd"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | source enhancd"
   shell: source /home/{{ user }}/enhancd/init.sh
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| zsh | Copy .zshrc file"
   copy:
     src: /home/{{ user }}/Dotfile-config/zsh/.zshrc 
     dest: /home/{{ user }}/.zshrc
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 

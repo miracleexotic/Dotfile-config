@@ -2,5 +2,9 @@
   copy:
     src: /home/{{ user }}/Dotfile-config/bash/.bashrc 
     dest: /home/{{ user }}/.bashrc
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 

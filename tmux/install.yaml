@@ -3,47 +3,83 @@
     pkg:
       - tmux
     update_cache: yes
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
+  register: result
+- name: Print out
+  debug:
+    var: zsh
 
 - name: "| tmux | Change network interface"
   shell: sed -i "s/<NET-INTERFACE>/$(ip -o link | head -n 2 | tail -n 1 | cut -d ':' -f 2 | cut -d ' ' -f 2)/g" /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Create .config folder"
   file:
     path: /home/{{ user }}/.config
     state: directory
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Copy .tmux.conf file"
   copy:
     src: /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
     dest: /home/{{ user }}/.config/.tmux.conf
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Git Clone - Install plugin tmp"
   ansible.builtin.git:
     repo: 'https://github.com/tmux-plugins/tpm'
     dest: "/home/{{ user }}/.tmux/plugins/tpm"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Git Clone - Install plugin tmux-nova"
   ansible.builtin.git:
     repo: 'https://github.com/o0th/tmux-nova.git'
     dest: "/home/{{ user }}/.tmux/plugins/tmux-nova"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Git Clone - Install plugin tmux-cpu"
   ansible.builtin.git:
     repo: 'https://github.com/tmux-plugins/tmux-cpu.git'
     dest: "/home/{{ user }}/.tmux/plugins/tmux-cpu"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 - name: "| tmux | Git Clone - Install plugin tmux-net-speed"
   ansible.builtin.git:
     repo: 'https://github.com/tmux-plugins/tmux-net-speed.git'
     dest: "/home/{{ user }}/.tmux/plugins/tmux-net-speed"
+  register: result
+- name: Print out
+  debug:
+    var: result
 
 
