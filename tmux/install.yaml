@@ -28,19 +28,10 @@
   debug:
     var: result
 
-- name: "| tmux | Create .config folder"
-  file:
-    path: /home/{{ user }}/.config
-    state: directory
-  register: result
-- name: Print out
-  debug:
-    var: result
-
 - name: "| tmux | Copy .tmux.conf file"
   copy:
     src: /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
-    dest: /home/{{ user }}/.config/.tmux.conf
+    dest: /home/{{ user }}/.tmux.conf
   register: result
 - name: Print out
   debug:
