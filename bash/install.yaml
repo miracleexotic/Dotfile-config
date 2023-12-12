@@ -7,4 +7,9 @@
   debug:
     var: result
 
-
+- name: "| bash | Add environment"
+  shell: echo 'export GNUTLS_CPUID_OVERRIDE=0x1' >> /etc/environment
+  register: result
+- name: Print out
+  debug:
+    var: result
