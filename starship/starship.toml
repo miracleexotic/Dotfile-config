@@ -50,7 +50,6 @@ $perl\
 $php\
 $pulumi\
 $purescript\
-$python\
 $raku\
 $rlang\
 $red\
@@ -142,6 +141,11 @@ format = 'via [$symbol]($style) '
 [python]
 symbol = ''
 style = 'bold yellow'
-format = 'via [$symbol]($style) '
+# format = 'via [${symbol} (${version} )(\($virtualenv\) )]($style)'
+format = 'via [${symbol} (\($virtualenv\) )]($style)'
+pyenv_version_name = true
 
+[conda]
+symbol = ' '
+style = 'bold yellow'
 
