@@ -9,7 +9,7 @@ sudo GNUTLS_CPUID_OVERRIDE=0x1 apt-add-repository ppa:ansible/ansible
 echo "\n[i] Update"
 sudo GNUTLS_CPUID_OVERRIDE=0x1 apt update
 echo "\n[i] Install Ansible"
-sudo GNUTLS_CPUID_OVERRIDE=0x1 apt install ansible
+sudo GNUTLS_CPUID_OVERRIDE=0x1 apt install ansible -y
 echo "\n[i] Check Ansible version"
 ansible --version
 
