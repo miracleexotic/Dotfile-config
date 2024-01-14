@@ -28,7 +28,9 @@
     var: result
 
 - name: "| nodejs | Install NodeJs"
-  shell: nvm install v16.14.0
+  become: yes
+  become_user: root
+  shell: "source .nvm/nvm.sh && nvm install node"
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
@@ -38,7 +40,9 @@
     var: result
 
 - name: "| nodejs | check version NodeJs"
-  shell: node -v
+  become: true
+  become_user: root
+  shell: "source .nvm/nvm.sh && nvm use node && node -v"
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
@@ -46,3 +50,5 @@
 - name: Print out
   debug:
     var: result
+
+

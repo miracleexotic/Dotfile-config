@@ -20,7 +20,7 @@
 
 - name: "| nvim::neo-vim | Download Neo Vim."
   become_user: "{{ user }}"
-  shell: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  shell: sudo curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   args:
     chdir: /opt/
     executable: "{{ zsh.stdout }}"
@@ -31,7 +31,7 @@
 
 - name: "| nvim::neo-vim | Change permission nvim.appimage can execute."
   become_user: "{{ user }}"
-  shell: chmod u+x nvim.appimage
+  shell: sudo chmod u+x nvim.appimage
   args:
     chdir: /opt/
     executable: "{{ zsh.stdout }}"
@@ -42,7 +42,7 @@
 
 - name: "| nvim::neo-vim | Run nvim.appimage"
   become_user: "{{ user }}"
-  shell: ./nvim.appimage --appimage-extract
+  shell: sudo ./nvim.appimage --appimage-extract
   args:
     chdir: /opt/
     executable: "{{ zsh.stdout }}"
@@ -53,7 +53,7 @@
 
 - name: "| nvim::neo-vim | Check Neo Vim version."
   become_user: "{{ user }}"
-  shell: ./squashfs-root/AppRun --version
+  shell: sudo ./squashfs-root/AppRun --version
   args:
     chdir: /opt/
     executable: "{{ zsh.stdout }}"
@@ -64,7 +64,7 @@
 
 - name: "| nvim::neo-vim | Exposing nvim globally."
   become_user: "{{ user }}"
-  shell: sudo mv squashfs-root / && sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+  shell: sudo mv squashfs-root / && sudo ln -sf /squashfs-root/AppRun /usr/bin/nvim
   args:
     chdir: /opt/
     executable: "{{ zsh.stdout }}"
