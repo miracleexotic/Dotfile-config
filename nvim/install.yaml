@@ -1,0 +1,96 @@
+- name: "| nvim | Install require library"
+  apt:
+    pkg:
+      - ripgrep
+      - fd-find
+    update_cache: yes
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim | Get zsh path."
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+- name: Print out
+  debug:
+    var: zsh
+
+- name: "| nvim::neo-vim | Download Neo Vim."
+  become_user: "{{ user }}"
+  shell: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  args:
+    chdir: /opt/
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Change permission nvim.appimage can execute."
+  become_user: "{{ user }}"
+  shell: chmod u+x nvim.appimage
+  args:
+    chdir: /opt/
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Run nvim.appimage"
+  become_user: "{{ user }}"
+  shell: ./nvim.appimage --appimage-extract
+  args:
+    chdir: /opt/
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Check Neo Vim version."
+  become_user: "{{ user }}"
+  shell: ./squashfs-root/AppRun --version
+  args:
+    chdir: /opt/
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Exposing nvim globally."
+  become_user: "{{ user }}"
+  shell: sudo mv squashfs-root / && sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+  args:
+    chdir: /opt/
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Copy nvim folder"
+  copy:
+    src: /home/{{ user }}/Dotfile-config/nvim/config/nvim/
+    dest: /home/{{ user }}/.config/nvim/
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- name: "| nvim::neo-vim | Remove download file."
+  shell: rm -rf ./nvim.appimage
+  args:
+    chdir: /opt
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: Print out
+  debug:
+    var: result
+
+- include: ./config/nodejs/install.yaml
+- include: ./config/miniconda/install.yaml
