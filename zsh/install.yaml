@@ -78,7 +78,7 @@
 - name: "| zsh | Git Clone enhancd"
   become_user: "{{ user }}"
   git:
-    repo: 'https://github.com/b4b4r07/enhancd'
+    repo: "https://github.com/b4b4r07/enhancd"
     dest: "/home/{{ user }}/enhancd"
   register: result
 - name: Print out
@@ -97,11 +97,9 @@
 
 - name: "| zsh | Copy .zshrc file"
   copy:
-    src: /home/{{ user }}/Dotfile-config/zsh/.zshrc 
+    src: /home/{{ user }}/Dotfile-config/zsh/.zshrc
     dest: /home/{{ user }}/.zshrc
   register: result
 - name: Print out
   debug:
     var: result
-
-
