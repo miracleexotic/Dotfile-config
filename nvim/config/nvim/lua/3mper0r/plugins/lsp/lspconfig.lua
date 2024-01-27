@@ -135,3 +135,10 @@ lspconfig["pyright"].setup({
 		}, -- https://github.com/microsoft/pyright/blob/main/docs/configuration.md, https://github.com/microsoft/pyright/blob/main/docs/settings.md
 	},
 })
+
+-- configure php server
+lspconfig["intelephense"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	filetypes = { "php" },
+})

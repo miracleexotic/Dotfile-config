@@ -27,6 +27,8 @@ null_ls.setup({
 		}),
 		formatting.black, -- python formatter
 		diagnostics.flake8.with({ extra_args = { "--ignore=E203,E501" } }), -- python linter
+		formatting.phpcbf, -- php formatter
+		diagnostics.phpcs, -- php linter
 	},
 	-- configure format on save
 	on_attach = function(current_client, bufnr)

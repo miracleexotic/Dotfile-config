@@ -169,6 +169,17 @@ return packer.startup(function(use)
 	-- lsp signature
 	use({ "ray-x/lsp_signature.nvim" })
 
+	-- Sessions w/ auto-session
+	use({
+		"rmagatti/auto-session",
+		config = function()
+			require("auto-session").setup({
+				log_level = "error",
+				auto_session_suppress_dirs = { "~/", "~/Workspaces", "/" },
+			})
+		end,
+	})
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
