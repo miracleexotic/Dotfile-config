@@ -319,7 +319,7 @@ zplug "supercrabtree/k"
 zplug "felixr/docker-zsh-completion"
 
 # User configuration
-export PATH="$HOME/.dotfiles/bin:$HOME/.bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.fzf/bin:$HOME/.local/bin:$HOME/.dotfiles/bin:$HOME/.bin:/usr/local/bin:$PATH"
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 export TERM="screen-256color"
@@ -338,6 +338,55 @@ zplug load
 
 # Aliases TMUX
 alias tmux='tmux -2'
+
+__tms() {
+
+  __get_list() {
+      # Keep old IFS
+      oldIFS=$IFS
+
+      # Get all sessions
+      all_ss=$(tmux list-sessions)
+
+      # Split with newline(\n) into array
+      IFS=$'\n' list_ss=($(printf "%s\n" "$all_ss"))
+
+      # Loop all sessions
+      for ss in "${list_ss[@]}"
+      do
+        printf "%s\n" "$ss"
+        ss_name=$(echo $ss | sed -E 's/:.*$//')
+
+        # Get all windows
+        all_windows=$(tmux list-windows -t $ss_name)
+
+        # Split with newline(\n) into array
+        IFS=$'\n' list_windows=($(printf "%s\n" "$all_windows"))
+
+        # Loop all windows 
+        for wd in "${list_windows[@]}"
+        do
+          number=$(echo $wd | sed -E 's/:.*$//')
+          name=$(echo $wd | sed -E 's/^.*: //' | sed -E 's/ .*$//')
+          count_pane=$(echo $wd | sed -E 's/\) .*$//' | sed -E 's/^.* \(//' | sed -E 's/ .*$//')
+          isactive=$(echo $wd | sed -E 's/^.* \@[0-9]+//' | sed -E 's/ //')
+          printf "   %s:%s: %s [%d] %s\n" "$ss_name" "$number" "$name" "$count_pane" "$isactive"
+        done
+      done
+      
+      # Restore IFS
+      IFS=$oldIFS
+  }
+  # __get_list
+  tmux attach -t $(__get_list | fzf --header 'Press ENTER to select TMUX sessions' \
+    --color header:italic --layout reverse \
+    --border 'bold' --border-label ' TMUX Sessions ' \
+    --preview-window down,,border-rounded \
+    --preview 'echo {} | sed -E "s/: .*$//" | sed -E "s/^.* //" | xargs tmux capture-pane -e -p -t ' \
+    | sed -E 's/: .*$//' | sed -E 's/^.* //' )
+
+}
+alias tms=__tms
 # Starting TMUX
 #if [ "$TMUX" = "" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
 
@@ -371,3 +420,5 @@ unset __conda_setup
 
 # Starship theme
 eval "$(starship init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
