@@ -74,7 +74,7 @@
     var: result
 
 - name: "| nvim::neo-vim | Link nvim folder"
-  shell: ln -s /home/{{ user }}/Dotfile-config/nvim/config/nvim /home/{{ user }}/.config/nvim
+  shell: ln -sf /home/{{ user }}/Dotfile-config/nvim/config/nvim /home/{{ user }}/.config/nvim
   args:
     chdir: /home/{{ user }}
   register: result

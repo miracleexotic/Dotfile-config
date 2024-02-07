@@ -1,5 +1,5 @@
 - name: "| bash | Link .bashrc file"
-  shell: ln -s /home/{{ user }}/Dotfile-config/bash/.bashrc /home/{{ user }}/.bashrc
+  shell: ln -sf /home/{{ user }}/Dotfile-config/bash/.bashrc /home/{{ user }}/.bashrc
   args:
     chdir: /home/{{ user }}
   register: result

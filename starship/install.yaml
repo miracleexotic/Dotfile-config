@@ -27,7 +27,7 @@
     var: result
 
 - name: "| starship | Link starship.toml file"
-  shell: ln -s /home/{{ user }}/Dotfile-config/starship/starship.toml /home/{{ user }}/.config/starship.toml
+  shell: ln -sf /home/{{ user }}/Dotfile-config/starship/starship.toml /home/{{ user }}/.config/starship.toml
   args:
     chdir: /home/{{ user }}
   register: result

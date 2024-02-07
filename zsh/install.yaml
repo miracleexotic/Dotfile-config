@@ -96,7 +96,7 @@
     var: result
 
 - name: "| zsh | Link .zshrc file"
-  shell: ln -s /home/{{ user }}/Dotfile-config/zsh/.zshrc /home/{{ user }}/.zshrc
+  shell: ln -sf /home/{{ user }}/Dotfile-config/zsh/.zshrc /home/{{ user }}/.zshrc
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"

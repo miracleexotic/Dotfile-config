@@ -29,7 +29,7 @@
     var: result
 
 - name: "| tmux | Link .tmux.conf file"
-  shell: ln -s /home/{{ user }}/tmux/.tmux.conf /home/{{ user }}/.tmux.conf
+  shell: ln -sf /home/{{ user }}/tmux/.tmux.conf /home/{{ user }}/.tmux.conf
   args: 
     chdir: /home/{{ user }}
   register: result
