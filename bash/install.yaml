@@ -1,7 +1,7 @@
-- name: "| bash | Copy .bashrc file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/bash/.bashrc 
-    dest: /home/{{ user }}/.bashrc
+- name: "| bash | Link .bashrc file"
+  shell: ln -s /home/{{ user }}/Dotfile-config/bash/.bashrc /home/{{ user }}/.bashrc
+  args:
+    chdir: /home/{{ user }}
   register: result
 - name: Print out
   debug:

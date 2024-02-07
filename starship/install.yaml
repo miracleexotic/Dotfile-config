@@ -26,12 +26,11 @@
   debug:
     var: result
 
-- name: "| starship | Copy starship.toml file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/starship/starship.toml
-    dest: /home/{{ user }}/.config/starship.toml
+- name: "| starship | Link starship.toml file"
+  shell: ln -s /home/{{ user }}/Dotfile-config/starship/starship.toml /home/{{ user }}/.config/starship.toml
+  args:
+    chdir: /home/{{ user }}
   register: result
 - name: Print out
   debug:
     var: result
-

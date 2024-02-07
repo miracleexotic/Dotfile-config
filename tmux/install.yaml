@@ -28,10 +28,10 @@
   debug:
     var: result
 
-- name: "| tmux | Copy .tmux.conf file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
-    dest: /home/{{ user }}/.tmux.conf
+- name: "| tmux | Link .tmux.conf file"
+  shell: ln -s /home/{{ user }}/tmux/.tmux.conf /home/{{ user }}/.tmux.conf
+  args: 
+    chdir: /home/{{ user }}
   register: result
 - name: Print out
   debug:

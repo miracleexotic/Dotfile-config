@@ -95,10 +95,11 @@
   debug:
     var: result
 
-- name: "| zsh | Copy .zshrc file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/zsh/.zshrc
-    dest: /home/{{ user }}/.zshrc
+- name: "| zsh | Link .zshrc file"
+  shell: ln -s /home/{{ user }}/Dotfile-config/zsh/.zshrc /home/{{ user }}/.zshrc
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
   register: result
 - name: Print out
   debug:
