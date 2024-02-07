@@ -17,16 +17,6 @@
   debug:
     var: result
 
-- name: "| nodejs | source .zshrc"
-  shell: source /home/{{ user }}/.zshrc
-  args:
-    chdir: /home/{{ user }}
-    executable: "{{ zsh.stdout }}"
-  register: result
-- name: Print out
-  debug:
-    var: result
-
 - name: "| nodejs | Install NodeJs"
   become: yes
   become_user: root
@@ -50,5 +40,3 @@
 - name: Print out
   debug:
     var: result
-
-
