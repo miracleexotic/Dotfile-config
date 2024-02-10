@@ -1,76 +1,64 @@
-- name: "| tmux | Install require library"
+- name: "tmux]-[Install require library"
   apt:
     pkg:
       - tmux
     update_cache: yes
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| tmux | Get zsh path"
+- name: "tmux]-[Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
-  register: result
-- name: Print out
+- name: "----"
   debug:
-    var: zsh
+    msg: "Executable: {{ zsh.stdout }}"
 
-- name: "| tmux | Change network interface"
-  shell: sed -i "s/<NET-INTERFACE>/$(ip -o link | head -n 2 | tail -n 1 | cut -d ':' -f 2 | cut -d ' ' -f 2)/g" /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
+- name: "tmux]-[Link .tmux.conf file"
+  shell: ln -sf /home/{{ user }}/Dotfile-config/tmux/.tmux.conf /home/{{ user }}/.tmux.conf
   args:
     chdir: /home/{{ user }}
-    executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| tmux | Copy .tmux.conf file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/tmux/.tmux.conf
-    dest: /home/{{ user }}/.tmux.conf
+- name: "tmux]-[Verify ~/.tmux folder"
+  stat:
+    path: /home/{{ user }}/.tmux
   register: result
-- name: Print out
+- name: "starship]-[Create ~/.tmux folder"
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/.tmux
+    state: directory
+  when: not result.stat.exists
+  register: result
+- name: "----"
   debug:
-    var: result
+    msg: "{% if result.changed == true %}Created ~/.tmux folder{% else %}Folder ~/.tmux is exists{% endif %}"
 
-- name: "| tmux | Git Clone - Install plugin tmp"
+- name: "tmux]-[Git Clone - Install plugin tpm"
+  become_user: "{{ user }}"
   ansible.builtin.git:
-    repo: 'https://github.com/tmux-plugins/tpm'
+    repo: "https://github.com/tmux-plugins/tpm"
     dest: "/home/{{ user }}/.tmux/plugins/tpm"
   register: result
-- name: Print out
+- name: "tmux]-[Verify install tpm"
+  stat:
+    path: /home/{{ user }}/.tmux/plugins/tpm
+  register: result
+- name: "----"
   debug:
-    var: result
+    msg: "{% if result.stat.exists %}Install tpm successful.{% else %}Install tpm not complete.{% endif %}"
 
-- name: "| tmux | Git Clone - Install plugin tmux-nova"
+- name: "tmux]-[Git Clone - Install plugin tmux-nova"
+  become_user: "{{ user }}"
   ansible.builtin.git:
-    repo: 'https://github.com/o0th/tmux-nova.git'
+    repo: "https://github.com/o0th/tmux-nova.git"
     dest: "/home/{{ user }}/.tmux/plugins/tmux-nova"
   register: result
-- name: Print out
-  debug:
-    var: result
-
-- name: "| tmux | Git Clone - Install plugin tmux-cpu"
-  ansible.builtin.git:
-    repo: 'https://github.com/tmux-plugins/tmux-cpu.git'
-    dest: "/home/{{ user }}/.tmux/plugins/tmux-cpu"
+- name: "tmux]-[Verify install tmux-nova"
+  stat:
+    path: /home/{{ user }}/.tmux/plugins/tmux-nova
   register: result
-- name: Print out
+- name: "----"
   debug:
-    var: result
-
-- name: "| tmux | Git Clone - Install plugin tmux-net-speed"
-  ansible.builtin.git:
-    repo: 'https://github.com/tmux-plugins/tmux-net-speed.git'
-    dest: "/home/{{ user }}/.tmux/plugins/tmux-net-speed"
-  register: result
-- name: Print out
-  debug:
-    var: result
-
-
+    msg: "{% if result.stat.exists %}Install tmux-nova successful.{% else %}Install tmux-nova not complete.{% endif %}"

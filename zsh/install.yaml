@@ -1,4 +1,4 @@
-- name: "| zsh | Install require library"
+- name: "zsh]-[Install require library"
   apt:
     pkg:
       - build-essential
@@ -6,100 +6,95 @@
       - cmake
       - zsh
       - bat
-      - fzf
       - tree
       - btop
     update_cache: yes
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| zsh | Get zsh path"
+- include: ../Essential/fzf/install.yaml
+
+- name: "zsh]-[Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
-- name: Print out
+- name: "----"
   debug:
-    var: zsh
+    msg: "Executable: {{ zsh.stdout }}"
 
-- name: "| zsh | Change user shell to zsh"
+- name: "zsh]-[Change user shell to zsh"
   user:
     name: "{{ user }}"
     shell: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "zsh]-[Verify shell"
+  shell: echo $SHELL
+  args:
+    chdir: /home/{{ user }}
+  register: result
+- name: "----"
   debug:
-    var: result
+    msg: "SHELL: {{ result.stdout }}"
 
-- name: "| zsh | Install zplug"
+- name: "zsh]-[Verify zplug"
+  stat:
+    path: /home/{{ user }}/.zplug
+  register: result
+- name: "zsh]-[Install zplug"
   become_user: "{{ user }}"
-  shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  shell: export ZPLUG_HOME=/home/{{ user }}/.zplug && git clone https://github.com/zplug/zplug $ZPLUG_HOME && source $ZPLUG_HOME/init.zsh
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  when: not result.stat.exists
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| zsh | Install Rust cargo"
-  become_user: "{{ user }}"
-  shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+- include: ../Prog-lang/Rust/install.yaml
+
+- name: "zsh]-[Verify exa"
+  shell: echo $(which exa)
   args:
-    chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
-  debug:
-    var: result
-
-- name: "| zsh | source cargo"
-  shell: source /home/{{ user }}/.cargo/env
-  args:
-    chdir: /home/{{ user }}
-    executable: "{{ zsh.stdout }}"
-  register: result
-- name: Print out
-  debug:
-    var: result
-
-- name: "| zsh | Install exa via cargo"
+- name: "zsh]-[Install exa via cargo"
   become_user: "{{ user }}"
   shell: cargo install exa
   args:
     executable: "{{ zsh.stdout }}"
+  when: result.stdout.find('not found') != -1
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| zsh | Git Clone enhancd"
+- name: "zsh]-[Verify enhancd"
+  stat:
+    path: /home/{{ user }}/enhancd
+  register: result
+- name: "zsh]-[Git Clone - enhancd"
   become_user: "{{ user }}"
   git:
     repo: "https://github.com/b4b4r07/enhancd"
     dest: "/home/{{ user }}/enhancd"
+  when: not result.stat.exists
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| zsh | source enhancd"
+- name: "zsh]-[source enhancd"
   shell: source /home/{{ user }}/enhancd/init.sh
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| zsh | Copy .zshrc file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/zsh/.zshrc
-    dest: /home/{{ user }}/.zshrc
+- name: "zsh]-[Link .zshrc file"
+  shell: ln -sf /home/{{ user }}/Dotfile-config/zsh/.zshrc /home/{{ user }}/.zshrc
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
-  debug:
-    var: result

@@ -1,37 +1,45 @@
-- name: "| starship | Get zsh path"
+- name: "starship]-[Get zsh path"
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
-- name: Print out
+- name: "----"
   debug:
-    var: zsh
+    msg: "Executable: {{ zsh.stdout }}"
 
-- name: "| starship | Install Starship"
+- name: "starship]-[Verify Starship"
+  shell: echo $(which starship)
+  args:
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "starship]-[Install Starship"
   shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
+  when: result.stdout.find('not found') != -1
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| starship | Create .config folder"
+- name: "starship]-[Verify ~/.config folder"
+  stat:
+    path: /home/{{ user }}/.config
+  register: result
+- name: "starship]-[Create ~/.config folder"
+  become_user: "{{ user }}"
   file:
     path: /home/{{ user }}/.config
     state: directory
+  when: not result.stat.exists
   register: result
-- name: Print out
+- name: "----"
   debug:
-    var: result
+    msg: "{% if result.changed == true %}Created ~/.config folder{% else %}Folder ~/.config is exists{% endif %}"
 
-- name: "| starship | Copy starship.toml file"
-  copy:
-    src: /home/{{ user }}/Dotfile-config/starship/starship.toml
-    dest: /home/{{ user }}/.config/starship.toml
+- name: "starship]-[Link starship.toml file"
+  shell: ln -sf /home/{{ user }}/Dotfile-config/starship/starship.toml /home/{{ user }}/.config/starship.toml
+  args:
+    chdir: /home/{{ user }}
   register: result
-- name: Print out
-  debug:
-    var: result
-
