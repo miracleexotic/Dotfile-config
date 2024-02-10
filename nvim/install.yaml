@@ -1,11 +1,3 @@
-- name: "nvim]-[Install require library"
-  apt:
-    pkg:
-      - ripgrep
-      - fd-find
-    update_cache: yes
-  register: result
-
 - name: "nvim]-[Get zsh path."
   shell: which zsh
   args:
@@ -14,6 +6,12 @@
 - name: "----"
   debug:
     msg: "Executable: {{ zsh.stdout }}"
+
+- name: "nvim]-[Install require library"
+  shell: pacman -S ripgrep fd
+  args:
+    executable: "{{ zsh.stdout }}"
+  register: result
 
 - name: "nvim]-[Verify ~/Downloads folder"
   stat:

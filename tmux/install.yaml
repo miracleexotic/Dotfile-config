@@ -1,10 +1,3 @@
-- name: "tmux]-[Install require library"
-  apt:
-    pkg:
-      - tmux
-    update_cache: yes
-  register: result
-
 - name: "tmux]-[Get zsh path"
   shell: which zsh
   args:
@@ -13,6 +6,12 @@
 - name: "----"
   debug:
     msg: "Executable: {{ zsh.stdout }}"
+
+- name: "tmux]-[Install require library"
+  shell: pacman -S tmux
+  args:
+    executable: "{{ zsh.stdout }}"
+  register: result
 
 - name: "tmux]-[Link .tmux.conf file"
   shell: ln -sf /home/{{ user }}/Dotfile-config/tmux/.tmux.conf /home/{{ user }}/.tmux.conf
