@@ -8,7 +8,7 @@
     msg: "Executable: {{ zsh.stdout }}"
 
 - name: "tmux]-[Install require library"
-  shell: pacman -S tmux
+  shell: pacman -S tmux --noconfirm
   args:
     executable: "{{ zsh.stdout }}"
   register: result

@@ -1,5 +1,5 @@
 - name: "zsh]-[Install require library"
-  shell: pacman -S bat tree btop zsh
+  shell: pacman -S bat tree btop zsh --noconfirm
   register: result
 
 - include_tasks: ../Essential/fzf/install.yaml
