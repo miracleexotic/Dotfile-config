@@ -13,7 +13,7 @@
     executable: "{{ zsh.stdout }}"
   register: result
 
-- include: ../Essential/fzf/install.yaml
+- include_tasks: ../Essential/fzf/install.yaml
 
 - name: "zsh]-[Change user shell to zsh"
   user:
@@ -45,7 +45,7 @@
   debug:
     var: result
 
-- include: ../Prog-lang/Rust/install.yaml
+- include_tasks: ../Prog-lang/Rust/install.yaml
 
 - name: "zsh]-[Verify exa"
   shell: echo $(which exa)
