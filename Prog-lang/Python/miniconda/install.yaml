@@ -1,0 +1,106 @@
+- name: "miniconda]-[Get zsh path."
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+- name: "----"
+  debug:
+    msg: "Executable: {{ zsh.stdout }}"
+
+- name: "miniconda]-[Mkdir miniconda3 and Download."
+  become_user: "{{ user }}"
+  shell: mkdir -p ./miniconda3 && wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ./miniconda3/miniconda.sh
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda]-[Install miniconda3."
+  become_user: "{{ user }}"
+  shell: bash ./miniconda3/miniconda.sh -b -u -p ./miniconda3
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda]-[Remove download file."
+  shell: rm -rf ./miniconda3/miniconda.sh
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Init miniconda3 zsh."
+  become_user: "{{ user }}"
+  shell: ./miniconda3/bin/conda init zsh
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Disable auto_activate_base."
+  shell: ./miniconda3/bin/conda config --set auto_activate_base False
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Verify auto_activate_base is False."
+  shell: ./miniconda3/bin/conda config --show | grep auto_activate_base
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Turn off changeps1."
+  shell: ./miniconda3/bin/conda config --set changeps1 True
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Verify changeps1 is False."
+  shell: ./miniconda3/bin/conda config --show | grep changeps1
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "miniconda3]-[Verify ~/python-venv folder"
+  stat:
+    path: /home/{{ user }}/python-venv
+  register: result
+- name: "miniconda3]-[Create ~/python-venv folder"
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/python-venv
+    state: directory
+  when: not result.stat.exists
+  register: result
+- name: "----"
+  debug:
+    msg: "{% if result.changed == true %}Created ~/python-venv folder{% else %}Folder ~/python-venv is exists{% endif %}"

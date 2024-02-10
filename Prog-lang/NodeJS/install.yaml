@@ -1,0 +1,40 @@
+- name: "nodejs]-[Get zsh path."
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+- name: "----"
+  debug:
+    msg: "Executable: {{ zsh.stdout }}"
+
+- name: "nodejs]-[Download NVM."
+  become_user: "{{ user }}"
+  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh
+  args:
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "nodejs]-[Install NodeJs"
+  become_user: "{{ user }}"
+  shell: "source .nvm/nvm.sh && nvm install node"
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result
+
+- name: "nodejs]-[check version NodeJs"
+  become_user: "{{ user }}"
+  shell: "source .nvm/nvm.sh && nvm use node && node -v"
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    var: result

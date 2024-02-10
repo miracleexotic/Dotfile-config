@@ -1,0 +1,26 @@
+- name: "rust]-[Get zsh path"
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+- name: "----"
+  debug:
+    msg: "Executable: {{ zsh.stdout }}"
+
+- name: "rust]-[Install Cargo"
+  become_user: "{{ user }}"
+  shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    msg: "{{ result.stdout_lines }}"
+
+- name: "rust]-[source cargo"
+  shell: source /home/{{ user }}/.cargo/env
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
