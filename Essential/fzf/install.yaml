@@ -1,0 +1,26 @@
+- name: "fzf]-[Get zsh path"
+  shell: which zsh
+  args:
+    executable: /bin/bash
+  register: zsh
+- name: "----"
+  debug:
+    msg: "Executable: {{ zsh.stdout }}"
+
+- name: "fzf]-[Git Clone - Install fzf"
+  become_user: "{{ user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/junegunn/fzf.git"
+    dest: "/home/{{ user }}/.fzf"
+  register: result
+
+- name: "fzf]-[Install fzf"
+  become_user: "{{ user }}"
+  shell: ./install
+  args:
+    chdir: /home/{{ user }}/.fzf
+    executable: "{{ zsh.stdout }}"
+  register: result
+- name: "----"
+  debug:
+    msg: "{{ result.stdout_lines }}"
