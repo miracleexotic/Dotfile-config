@@ -1,15 +1,16 @@
-- name: "| bash | Link .bashrc file"
+- name: "bash]-[Link .bashrc file"
   shell: ln -sf /home/{{ user }}/Dotfile-config/bash/.bashrc /home/{{ user }}/.bashrc
   args:
     chdir: /home/{{ user }}
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| bash | Add environment"
+- name: "bash]-[Add environment"
   shell: echo 'export GNUTLS_CPUID_OVERRIDE=0x1' >> /etc/environment
   register: result
-- name: Print out
-  debug:
-    var: result
+
+- name: "bash]-[Change folder owner."
+  become_user: "root"
+  shell: chown user /home/{{ user }}/
+  args:
+    chdir: /home/{{ user }}
+  register: result

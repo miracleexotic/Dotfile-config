@@ -1,96 +1,116 @@
-- name: "| nvim | Install require library"
+- name: "nvim]-[Install require library"
   apt:
     pkg:
       - ripgrep
       - fd-find
     update_cache: yes
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| nvim | Get zsh path."
+- name: "nvim]-[Get zsh path."
   shell: which zsh
   args:
     executable: /bin/bash
   register: zsh
-- name: Print out
+- name: "----"
   debug:
-    var: zsh
+    msg: "Executable: {{ zsh.stdout }}"
 
-- name: "| nvim::neo-vim | Download Neo Vim."
-  become_user: "root"
+- name: "nvim]-[Verify ~/Downloads folder"
+  stat:
+    path: /home/{{ user }}/Downloads
+  register: result
+- name: "starship]-[Create ~/Downloads folder"
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/Downloads
+    state: directory
+  when: not result.stat.exists
+  register: result
+- name: "----"
+  debug:
+    msg: "{% if result.changed == true %}Created ~/Downloads folder{% else %}Folder ~/Downloads is exists{% endif %}"
+
+- name: "nvim::neo-vim]-[Download Neo Vim."
+  become_user: "{{ user }}"
   shell: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   args:
-    chdir: /opt/
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "----"
   debug:
-    var: result
+    msg: "{{ result.stdout_lines }}"
 
-- name: "| nvim::neo-vim | Change permission nvim.appimage can execute."
-  become_user: "root"
+- name: "nvim::neo-vim]-[Change permission nvim.appimage can execute."
+  become_user: "{{ user }}"
   shell: chmod u+x nvim.appimage
   args:
-    chdir: /opt/
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| nvim::neo-vim | Run nvim.appimage"
-  become_user: "root"
+- name: "nvim::neo-vim]-[Run nvim.appimage"
+  become_user: "{{ user }}"
   shell: ./nvim.appimage --appimage-extract
   args:
-    chdir: /opt/
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "----"
   debug:
-    var: result
+    msg: "{{ result.stdout_lines }}"
 
-- name: "| nvim::neo-vim | Check Neo Vim version."
-  become_user: "root"
+- name: "nvim::neo-vim]-[Check Neo Vim version."
+  become_user: "{{ user }}"
   shell: ./squashfs-root/AppRun --version
   args:
-    chdir: /opt/
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "----"
   debug:
-    var: result
+    msg: "{{ result.stdout }}"
 
-- name: "| nvim::neo-vim | Exposing nvim globally."
-  become_user: "root"
+- name: "nvim::neo-vim]-[Exposing nvim globally."
   shell: mv squashfs-root / && sudo ln -sf /squashfs-root/AppRun /usr/bin/nvim
   args:
-    chdir: /opt/
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
+- name: "----"
   debug:
     var: result
 
-- name: "| nvim::neo-vim | Link nvim folder"
+- name: "nvim::neo-vim]-[Link nvim folder"
   shell: ln -sf /home/{{ user }}/Dotfile-config/nvim/config/nvim /home/{{ user }}/.config/nvim
   args:
     chdir: /home/{{ user }}
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- name: "| nvim::neo-vim | Remove download file."
+- name: "nvim::neo-vim]-[Remove download file."
   shell: rm -rf ./nvim.appimage
   args:
-    chdir: /opt
+    chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
   register: result
-- name: Print out
-  debug:
-    var: result
 
-- include: ./config/nodejs/install.yaml
-- include: ./config/miniconda/install.yaml
+- name: "nvim]-[Verify ~/Session.vim file"
+  stat:
+    path: /home/{{ user }}/Session.vim
+  register: result
+- name: "nvim]-[Create ~/Session.vim file"
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/Session.vim
+    state: touch
+  when: not result.stat.exists
+  register: result
+- name: "----"
+  debug:
+    msg: "{% if result.changed == true %}Created ~/Session.vim folder{% else %}Folder ~/Session.vim is exists{% endif %}"
+
+- include: ../Prog-lang/NodeJS/install.yaml
+- include: ../Prog-lang/Python/miniconda/install.yaml
