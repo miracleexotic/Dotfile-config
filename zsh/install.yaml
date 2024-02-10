@@ -1,3 +1,9 @@
+- name: "zsh]-[Install require library"
+  shell: pacman -S bat tree btop zsh
+  register: result
+
+- include_tasks: ../Essential/fzf/install.yaml
+
 - name: "zsh]-[Get zsh path"
   shell: which zsh
   args:
@@ -6,14 +12,6 @@
 - name: "----"
   debug:
     msg: "Executable: {{ zsh.stdout }}"
-
-- name: "zsh]-[Install require library"
-  shell: pacman -S bat tree btop
-  args:
-    executable: "{{ zsh.stdout }}"
-  register: result
-
-- include_tasks: ../Essential/fzf/install.yaml
 
 - name: "zsh]-[Change user shell to zsh"
   user:
