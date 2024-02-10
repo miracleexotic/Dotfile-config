@@ -10,7 +10,7 @@
 
 - name: "bash]-[Change folder owner."
   become_user: "root"
-  shell: chown user /home/{{ user }}/
+  shell: chown {{ user }} /home/{{ user }}/
   args:
     chdir: /home/{{ user }}
   register: result
