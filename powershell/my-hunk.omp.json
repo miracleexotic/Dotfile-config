@@ -99,7 +99,7 @@
             "root_icon": "\u26a1"
           },
           "style": "powerline",
-          "template": " \uf0e7",
+          "template": "🧙",
           "type": "root"
         },
         {
@@ -111,7 +111,7 @@
             "display_host": false
           },
           "style": "powerline",
-          "template": " {{ if .SSHSession }}\uf817 {{ end }}{{ .UserName }} ",
+          "template": "{{ if .SSHSession }}\uf817 {{ end }}{{ .UserName }} ",
           "type": "session"
         },
         {
@@ -136,11 +136,6 @@
       "alignment": "left",
       "newline": true,
       "segments": [
-        {
-          "style": "plain",
-          "template": " \uf0e7 ",
-          "type": "root"
-        },
         {
           "foreground": "#ffffff",
           "style": "plain",

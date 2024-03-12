@@ -5,13 +5,18 @@
       "alignment": "left",
       "segments": [
         {
+          "style": "plain",
+          "template": "🧙 ",
+          "type": "root"
+        },
+        {
           "foreground": "#ffffff",
           "properties": {
             "display_host": false,
             "display_user": true
           },
           "style": "plain",
-          "template": "🚀 {{ if .SSHSession }}\uf817 {{ end }}<#B6A5FF>{{ .UserName }}</> ",
+          "template": "{{ if .SSHSession }}\uf817 {{ end }}<#B6A5FF>{{ .UserName }}</> ",
           "type": "session"
         },
         {
@@ -21,14 +26,25 @@
             "max_depth": 2
           },
           "style": "plain",
-          "template": "<#ffffff>at</> <#e5e5e5,transparent>\ue0b6</><transparent,#e5e5e5><b> {{ .Path }}</b></><#e5e5e5,transparent>\ue0b4</> ",
+          "template": "<#ffffff>at</> <#e5e5e5,transparent>\ue0b6</><transparent,#e5e5e5><b> {{ .Path }}</b></><#e5e5e5,transparent>\ue0b4</> ",
           "type": "path"
         },
         {
-          "type": "poshgit",
-          "style": "plain",
-          "foreground": "#b98eff",
-          "template": "<#ffffff>on</> <b>🌱 </b><#b98eff>{{ .Status }}</>"
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FCA17D{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#f26d50{{ end }}",
+            "{{ if gt .Ahead 0 }}#f17c37{{ end }}",
+            "{{ if gt .Behind 0 }}#89d1dc{{ end }}"
+          ],
+          "powerline_symbol": "",
+          "properties": {
+            "fetch_stash_count": false,
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": "{{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} ",
+          "type": "git"
         }
       ],
       "type": "prompt"
@@ -70,11 +86,6 @@
       "alignment": "left",
       "newline": true,
       "segments": [
-        {
-          "style": "plain",
-          "template": " \uf0e7 ",
-          "type": "root"
-        },
         {
           "foreground": "#ffffff",
           "style": "plain",

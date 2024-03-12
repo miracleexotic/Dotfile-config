@@ -5,10 +5,10 @@ if ($host.Name -eq 'ConsoleHost')
 {
     Import-Module PSReadLine
 }
-#Import-Module PSColors
+# Import-Module PSColors
 Import-Module posh-git
 Import-Module -Name Terminal-Icons
-Import-Module oh-my-posh
+# Import-Module oh-my-posh
 Import-Module 'C:\tools\gsudo\Current\gsudoModule.psd1'
 #Set-Theme ParadoxGlucose
 #Set-PoshPrompt -theme "D:\Dropbox\poshv3.json"
@@ -17,10 +17,14 @@ $env:POSH_GIT_ENABLED = $true
 
 if ($env:TERM_PROGRAM -eq 'vscode')
 {
-    oh-my-posh --init --shell pwsh --config C:\Users\IAMMAI\Documents\PowerShell\Modules\oh-my-posh\5.13.0\themes\my-spaceship.omp.json | Invoke-Expression
+    oh-my-posh --init --shell pwsh --config C:\Users\3mper0r\.config\oh-my-posh\themes\my-spaceship.omp.json | Invoke-Expression
 } else {
-    oh-my-posh --init --shell pwsh --config C:\Users\IAMMAI\Documents\PowerShell\Modules\oh-my-posh\5.13.0\themes\my-hunk.omp.json | Invoke-Expression
+    oh-my-posh --init --shell pwsh --config C:\Users\3mper0r\.config\oh-my-posh\themes\my-hunk.omp.json | Invoke-Expression
 }
+
+# $ENV:STARSHIP_CONFIG = "$HOME\.config\starship\starship.toml"
+# Invoke-Expression (&starship init powershell)
+
 
 if ($env:TERM_PROGRAM -ne 'vscode')
 {
