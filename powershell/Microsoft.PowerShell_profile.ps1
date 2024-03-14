@@ -85,6 +85,22 @@ if ($env:TERM_PROGRAM -ne 'vscode')
     # Write-Host " "
 }
 
+#-----------------------------------------------------
+# DOCKER
+#-----------------------------------------------------
+Function __docker_start {
+    $wslip = wsl -- ip -o -4 -json addr list eth0 | ConvertFrom-Json | ForEach-Object { $_.addr_info.local } | Where-Object { $_ }
+    $ctx = docker context ls --format json | ConvertFrom-Json | Where-Object { $_.Name -eq "wsl" }
+    if($null -eq $ctx) {
+        Write-Host "Creating Docker context 'wsl' to host=tcp://$($wslip):2375"
+        docker context create wsl --docker "host=tcp://$($wslip):2375" | Out-Null
+    } else {
+        docker context update wsl --docker "host=tcp://$($wslip):2375" | Out-Null
+    }
+    docker context use wsl | Out-Null
+}
+Set-Alias -Name 'docker-start' -Value __docker_start
+
 Function startSqlitebrowser {Start-Process 'C:\Program Files\DB Browser for SQLite\DB Browser for SQLite' $args}
 Set-Alias -Name 'sqlitebrowser' -Value startSqlitebrowser
 
