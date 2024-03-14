@@ -112,5 +112,5 @@
   debug:
     msg: "{% if result.changed == true %}Created ~/Session.vim folder{% else %}Folder ~/Session.vim is exists{% endif %}"
 
-- include: ../Prog-lang/NodeJS/install.yaml
-- include: ../Prog-lang/Python/miniconda/install.yaml
+- include_tasks: ../Prog-lang/NodeJS/install.yaml
+- include_tasks: ../Prog-lang/Python/miniconda/install.yaml

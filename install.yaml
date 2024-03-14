@@ -10,8 +10,8 @@
     GNUTLS_CPUID_OVERRIDE: 0x1
 
   tasks:
-    - include: ./bash/install.yaml
-    - include: ./zsh/install.yaml
-    - include: ./starship/install.yaml
-    - include: ./tmux/install.yaml
-    - include: ./nvim/install.yaml
+    - include_tasks: ./bash/install.yaml
+    - include_tasks: ./zsh/install.yaml
+    - include_tasks: ./starship/install.yaml
+    - include_tasks: ./tmux/install.yaml
+    - include_tasks: ./nvim/install.yaml

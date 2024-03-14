@@ -8,9 +8,16 @@
   shell: echo 'export GNUTLS_CPUID_OVERRIDE=0x1' >> /etc/environment
   register: result
 
+- name: "bash]-[Set locale en_US.UTF-8"
+  become_user: "root"
+  shell: locale-gen en_US.UTF-8
+  args:
+    chdir: /home/{{ user }}
+  register: result
+
 - name: "bash]-[Change folder owner."
   become_user: "root"
-  shell: chown user /home/{{ user }}/
+  shell: chown {{ user }} /home/{{ user }}/
   args:
     chdir: /home/{{ user }}
   register: result
