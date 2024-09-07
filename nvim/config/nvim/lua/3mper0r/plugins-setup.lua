@@ -80,7 +80,24 @@ return packer.startup(function(use)
 
 	-- fuzzy finding w/ telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
+	use({
+		"nvim-telescope/telescope.nvim",
+		event = "VimEnter",
+		branch = "0.1.x",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				run = "make",
+				cond = function()
+					return vim.fn.executable("make") == 1
+				end,
+			},
+			{ "nvim-telescope/telescope-ui-select.nvim" },
+			-- Useful for getting pretty icons, but requires a Nerd Font.
+			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+		},
+	}) -- fuzzy finder
 
 	-- autocompletion
 	use("hrsh7th/nvim-cmp") -- completion plugin
@@ -95,6 +112,16 @@ return packer.startup(function(use)
 	-- managing & installing lsp servers, linters & formatters
 	use("williamboman/mason.nvim") -- in charge of managing lsp servers, linters & formatters
 	use("williamboman/mason-lspconfig.nvim") -- bridges gap b/w mason & lspconfig
+	use("WhoIsSethDaniel/mason-tool-installer.nvim")
+
+	-- Useful status updates for LSP.
+	-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+	use({
+		"j-hui/fidget.nvim",
+		config = function()
+			require("fidget").setup()
+		end,
+	})
 
 	-- configuring lsp servers
 	use("neovim/nvim-lspconfig") -- easily configure language servers
@@ -116,6 +143,9 @@ return packer.startup(function(use)
 	-- formatting & linting
 	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+
+	-- Autoformat
+	use("stevearc/conform.nvim")
 
 	-- treesitter configuration
 	use({
@@ -179,6 +209,24 @@ return packer.startup(function(use)
 			require("auto-session").setup({
 				log_level = "error",
 				auto_session_suppress_dirs = { "~/", "~/Workspaces", "/" },
+			})
+		end,
+	})
+
+	-- Detect tabstop and shiftwidth automatically
+	use("tpope/vim-sleuth")
+
+	-- show you pending keybinds.
+	use("folke/which-key.nvim")
+
+	-- Highlight todo, notes, etc in comments
+	use({
+		"folke/todo-comments.nvim",
+		event = "VimEnter",
+		requires = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("todo-comments").setup({
+				signs = false,
 			})
 		end,
 	})

@@ -18,18 +18,43 @@ local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
 	-- set keybinds
-	keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>", opts) -- show definition, references
-	keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
-	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-	keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
-	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-	keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-	keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts) -- see outline on right hand side
+	keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>", { table.unpack(opts), desc = "[G]oto [F]inder" }) -- show definition, references
+	keymap.set(
+		"n",
+		"gD",
+		"<cmd>lua vim.lsp.buf.declaration()<CR>",
+		{ table.unpack(opts), desc = "[G]oto [D]eclaration" }
+	) -- got to declaration
+	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { table.unpack(opts), desc = "[G]oto [d]efinition" }) -- see definition and make edits in window
+	keymap.set(
+		"n",
+		"gi",
+		"<cmd>lua vim.lsp.buf.implementation()<CR>",
+		{ table.unpack(opts), desc = "[G]oto [I]mplementation" }
+	) -- go to implementation
+	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", { table.unpack(opts), desc = "[C]ode [A]ctions" }) -- see available code actions
+	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { table.unpack(opts), desc = "[R]e[N]ame" }) -- smart rename
+	keymap.set(
+		"n",
+		"<leader>ld",
+		"<cmd>Lspsaga show_line_diagnostics<CR>",
+		{ table.unpack(opts), desc = "[L]ine [D]iagnostic" }
+	) -- show  diagnostics for line
+	keymap.set(
+		"n",
+		"<leader>cd",
+		"<cmd>Lspsaga show_cursor_diagnostics<CR>",
+		{ table.unpack(opts), desc = "[C]ursor [D]iagnostic" }
+	) -- show diagnostics for cursor
+	keymap.set(
+		"n",
+		"[d",
+		"<cmd>Lspsaga diagnostic_jump_prev<CR>",
+		{ table.unpack(opts), desc = "[P]revious [D]iagnostic" }
+	) -- jump to previous diagnostic in buffer
+	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { table.unpack(opts), desc = "[N]ext [D]iagnostic" }) -- jump to next diagnostic in buffer
+	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { table.unpack(opts), desc = "[K]over" }) -- show documentation for what is under cursor
+	keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { table.unpack(opts), desc = "[O]utline" }) -- see outline on right hand side
 
 	-- typescript specific keymaps (e.g. rename file and update imports)
 	if client.name == "vtsls" then

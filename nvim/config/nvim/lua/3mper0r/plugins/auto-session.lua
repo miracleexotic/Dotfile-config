@@ -12,10 +12,6 @@ end
 
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
-vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, {
-	noremap = true,
-})
-
 telescope.load_extension("session-lens")
 
 -- enable auto-session
