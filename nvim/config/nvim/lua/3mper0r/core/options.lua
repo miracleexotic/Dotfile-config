@@ -5,19 +5,19 @@ opt.relativenumber = true -- show relative line numbers
 opt.number = true -- shows absolute line number on cursor line (when relative number is on)
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = "a"
+opt.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+opt.showmode = false
 
 -- tabs & indentation
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spaces
 opt.autoindent = true -- copy indent from current line when starting new one
-vim.opt.breakindent = true
+opt.breakindent = true
 
 -- Save undo history
-vim.opt.undofile = true
+opt.undofile = true
 
 -- line wrapping
 opt.wrap = false -- disable line wrapping
@@ -39,11 +39,11 @@ opt.writebackup = false
 -- Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
 -- delays and poor user experience
 -- Decrease update time
-vim.opt.updatetime = 250
+opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
+opt.timeoutlen = 300
 
 -- appearance
 
@@ -65,7 +65,7 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
+	opt.clipboard = "unnamedplus"
 end)
 
 -- split windows
@@ -75,7 +75,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+opt.list = true
+opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 opt.iskeyword:append("-") -- consider string-string as whole word

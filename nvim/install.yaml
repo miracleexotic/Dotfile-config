@@ -1,8 +1,15 @@
+- include_tasks: ../Prog-lang/NodeJS/install.yaml
+- include_tasks: ../Prog-lang/Python/miniconda/install.yaml
+
 - name: "nvim]-[Install require library"
   apt:
     pkg:
       - ripgrep
       - fd-find
+      - unzip
+      - make
+      - git
+      - luarocks
     update_cache: yes
   register: result
 
@@ -112,5 +119,25 @@
   debug:
     msg: "{% if result.changed == true %}Created ~/Session.vim folder{% else %}Folder ~/Session.vim is exists{% endif %}"
 
-- include_tasks: ../Prog-lang/NodeJS/install.yaml
-- include_tasks: ../Prog-lang/Python/miniconda/install.yaml
+- name: "nvim]-[Install neovim with nodejs support"
+  become_user: "{{ user }}"
+  shell: npm install -g neovim
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+
+- name: "nvim]-[Install jsregexp by luarocks"
+  shell: luarocks install jsregexp
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
+
+- name: "nvim]-[Install tree-sitter-cli by cargo"
+  become_user: "{{ user }}"
+  shell: cargo install tree-sitter-cli
+  args:
+    chdir: /home/{{ user }}
+    executable: "{{ zsh.stdout }}"
+  register: result
