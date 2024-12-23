@@ -51,7 +51,7 @@ keymap.set("n", "<leader>lrs", ":LspRestart<CR>", { desc = "[L]SP [R]e[S]tart" }
 keymap.set("n", "<leader>sp", "<cmd>lua require('swenv.api').pick_venv()<cr>", { desc = "[S]earch [P]ython env" })
 
 -- auto-session
-vim.keymap.set("n", "<leader>sa", require("auto-session.session-lens").search_session, {
+keymap.set("n", "<leader>sa", "<cmd>SessionSearch<cr>", {
 	desc = "[S]earch [A]uto Session",
 	noremap = true,
 })
