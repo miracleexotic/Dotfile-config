@@ -5,4 +5,6 @@ if not setup then
 end
 
 -- enable indent
-indent.setup()
+indent.setup({
+	indent = { char = "▎" },
+})
