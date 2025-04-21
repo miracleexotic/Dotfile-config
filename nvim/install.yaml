@@ -39,7 +39,7 @@
 
 - name: "nvim::neo-vim]-[Download Neo Vim."
   become_user: "{{ user }}"
-  shell: curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  shell: curl -L -o nvim.appimage https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage
   args:
     chdir: /home/{{ user }}/Downloads/
     executable: "{{ zsh.stdout }}"
