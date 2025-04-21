@@ -10,6 +10,8 @@ if not cmp_nvim_lsp_status then
 	return
 end
 
+table.unpack = table.unpack or unpack -- 5.1 compatibility
+
 local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
