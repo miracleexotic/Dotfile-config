@@ -141,7 +141,12 @@ return packer.startup(function(use)
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 
 	-- formatting & linting
-	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
+	use({
+		"nvimtools/none-ls.nvim",
+		requires = {
+			{"nvimtools/none-ls-extras.nvim"},
+		},
+	}) -- configure formatters & linters
 	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
 
 	-- Autoformat
@@ -187,7 +192,8 @@ return packer.startup(function(use)
 	use({ "lukas-reineke/indent-blankline.nvim" })
 
 	-- python env
-	use({ "ChristianChiarulli/swenv.nvim" })
+	-- use({ "ChristianChiarulli/swenv.nvim" })
+	use({ "AckslD/swenv.nvim" })
 	use({ "stevearc/dressing.nvim" })
 
 	-- terminal w/ toggleterm
@@ -239,6 +245,9 @@ return packer.startup(function(use)
 			require("mini.icons").setup()
 		end,
 	})
+
+	-- vim-visual-multi
+	use("mg979/vim-visual-multi")
 
 	if packer_bootstrap then
 		require("packer").sync()

@@ -19,14 +19,14 @@ null_ls.setup({
 		--  "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
 		formatting.prettier, -- js/ts formatter
 		formatting.stylua, -- lua formatter
-		diagnostics.eslint_d.with({ -- js/ts linter
+		require("none-ls.diagnostics.eslint_d").with({ -- js/ts linter
 			-- only enable eslint if root has .eslintrc.js (not in youtube nvim video)
 			condition = function(utils)
 				return utils.root_has_file(".eslintrc.js") -- change file extension if you use something else
 			end,
 		}),
 		formatting.black, -- python formatter
-		diagnostics.flake8.with({ extra_args = { "--ignore=E203,E501" } }), -- python linter
+		require("none-ls.diagnostics.flake8").with({ extra_args = { "--ignore=E203,E501" } }), -- python linter
 		formatting.phpcbf, -- php formatter
 		diagnostics.phpcs, -- php linter
 	},
