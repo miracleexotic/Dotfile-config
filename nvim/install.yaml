@@ -121,7 +121,7 @@
 
 - name: "nvim]-[Install neovim with nodejs support"
   become_user: "{{ user }}"
-  shell: npm install -g neovim
+  shell: source .nvm/nvm.sh && npm install -g neovim
   args:
     chdir: /home/{{ user }}
     executable: "{{ zsh.stdout }}"
