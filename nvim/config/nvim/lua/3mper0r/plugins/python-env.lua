@@ -14,7 +14,7 @@ swenv.setup({
 	end,
 	-- Path passed to `get_venvs`.
 	-- venvs_path = vim.fn.expand("~/python-venv"),
-	venvs_path = vim.fn.expand("~/miniconda3/envs"),
+	-- venvs_path = vim.fn.expand("~/miniconda3/envs"),
 	-- Something to do after setting an environment, for example call vim.cmd.LspRestart
 	post_set_venv = function()
 		vim.cmd("LspRestart")
