@@ -121,6 +121,13 @@ return packer.startup(function(use)
 		config = function()
 			require("fidget").setup()
 		end,
+		opts = {
+			notification = {
+				window = {
+					winblend = 0,
+				},
+			},
+		},
 	})
 
 	-- configuring lsp servers
@@ -171,18 +178,13 @@ return packer.startup(function(use)
 	-- Tapline w/ bufferline
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 
-	-- bar w/ barbecue
+	-- bar w/ dropbar.nvim
 	use({
-		"utilyre/barbecue.nvim",
-		tag = "*",
+		"Bekaboo/dropbar.nvim",
 		requires = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
+			"nvim-telescope/telescope-fzf-native.nvim",
+			run = "make",
 		},
-		after = "nvim-web-devicons", -- keep this if you're using NvChad
-		config = function()
-			require("barbecue").setup()
-		end,
 	})
 
 	-- neovim command guide w/ wilder
