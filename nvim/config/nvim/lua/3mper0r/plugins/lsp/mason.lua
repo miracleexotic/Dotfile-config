@@ -41,6 +41,8 @@ mason_lspconfig.setup({
 	ensure_installed = servers,
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true, -- not the same as ensure_installed
+	-- disabled vim.lsp.enable()
+	automatic_enable = false,
 })
 
 local form_lint = {
