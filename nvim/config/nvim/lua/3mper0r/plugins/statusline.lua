@@ -3,6 +3,27 @@
 -- Credit: glepnir
 local lualine = require("lualine")
 
+-- local default_refresh_events = {
+-- 	"WinEnter",
+-- 	"BufEnter",
+-- 	"BufWritePost",
+-- 	"SessionLoadPost",
+-- 	"FileChangedShellPost",
+-- 	"VimResized",
+-- 	"Filetype",
+-- 	"CursorMoved",
+-- 	"CursorMovedI",
+-- 	"ModeChanged",
+-- }
+-- vim.api.nvim_create_autocmd(default_refresh_events, {
+-- 	group = vim.api.nvim_create_augroup("LualineRefreshEvents", { clear = true }),
+-- 	callback = function()
+-- 		vim.schedule(function()
+-- 			require("lualine").refresh()
+-- 		end)
+-- 	end,
+-- })
+
 -- Color table for highlights
 -- stylua: ignore
 local colors = {
@@ -73,6 +94,7 @@ local config = {
 			normal = { c = { fg = colors.fg, bg = colors.bg } },
 			inactive = { c = { fg = colors.fg, bg = colors.bg } },
 		},
+		globalstatus = true,
 	},
 	sections = {
 		-- these are to remove the defaults
@@ -187,7 +209,7 @@ ins_left({
 		---@diagnostic disable-next-line: deprecated
 		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
 		---@diagnostic disable-next-line: deprecated
-		local clients = vim.lsp.get_active_clients()
+		local clients = vim.lsp.get_clients()
 		if next(clients) == nil then
 			return msg
 		end
