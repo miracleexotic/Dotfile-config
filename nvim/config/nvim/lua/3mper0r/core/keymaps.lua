@@ -58,6 +58,9 @@ keymap.set("n", "<leader>sa", "<cmd>SessionSearch<cr>", {
 keymap.set("n", "<leader>wsr", "<cmd>SessionRestore<CR>", { desc = "[w]orkspace [w]ession [r]estore" }) -- restore last workspace session for current directory
 keymap.set("n", "<leader>wss", "<cmd>SessionSave<CR>", { desc = "[w]orkspace [s]ession [s]ave" }) -- save workspace session for current working directory
 
+-- undotree
+keymap.set("n", "<leader>tu", vim.cmd.UndotreeToggle, { desc = "[t]oggle [u]ndotree" })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

@@ -20,6 +20,7 @@ which_key.setup({
 		{ "<leader>n", group = "[n]o" },
 		{ "<leader>r", group = "[r]ename" },
 		{ "<leader>s", group = "[s]earch" },
+		{ "<leader>t", group = "[t]oggle / [t]rouble" },
 		{ "<leader>w", group = "[w]orkspace" },
 		{ "<leader>ws", group = "[w]orkspace [s]plit / [s]ession" },
 		{ "<leader>wt", group = "[w]orkspace [t]ab" },
