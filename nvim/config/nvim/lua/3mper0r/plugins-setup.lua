@@ -136,6 +136,7 @@ return packer.startup(function(use)
 	use({
 		"glepnir/lspsaga.nvim",
 		branch = "main",
+		after = "nvim-lspconfig",
 		requires = {
 			{ "nvim-tree/nvim-web-devicons" },
 			{ "nvim-treesitter/nvim-treesitter" },
@@ -225,7 +226,17 @@ return packer.startup(function(use)
 	use("tpope/vim-sleuth")
 
 	-- show you pending keybinds.
-	use("folke/which-key.nvim")
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({
+				preset = "classic",
+				triggers = {
+					{ "<auto>", mode = "nxsoi" },
+				},
+			})
+		end,
+	})
 
 	-- Highlight todo, notes, etc in comments
 	use({
