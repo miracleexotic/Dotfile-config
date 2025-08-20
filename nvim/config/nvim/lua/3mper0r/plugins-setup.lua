@@ -262,6 +262,9 @@ return packer.startup(function(use)
 	-- vim-visual-multi
 	use("mg979/vim-visual-multi")
 
+	-- undotree
+	use("mbbill/undotree")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
