@@ -56,8 +56,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		opts.desc = "Show do[K]umentation"
 		vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
 
-		opts.desc = "Show [o]utline"
-		vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", opts) -- show documentation for what is under cursor
+		opts.desc = "[t]oggle [o]utline"
+		vim.keymap.set("n", "<leader>to", "<cmd>Lspsaga outline<CR>", opts) -- show documentation for what is under cursor
 
 		vim.keymap.set("i", "<C-h>", function()
 			vim.lsp.buf.signature_help()
